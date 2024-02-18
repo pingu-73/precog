@@ -1,10 +1,10 @@
 ### To test the project:
 - Clone the repo.
-- Create a `python virtual environment`.
+- Create a `python virtual environment` using `venv` or `virtualenv`.
 - run `pip install -r requirements.txt` to download required python libraries.
 - The project uses `spaCy` for some tasks to install `spaCy` follow steps given [here](https://spacy.io/usage)
 - After installing spacy run `python -m spacy download en_core_web_lg` to install the dataset for spaCy.
-- `Task-1\`
+- `task1\Q1.ipynb` is the code when Restrictions are there all other code files are named properly.
 
 # Task-1
 ## Aim: 
