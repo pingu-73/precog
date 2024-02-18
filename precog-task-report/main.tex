@@ -188,4 +188,43 @@ Since I've represented words as vectors and have plotted them. The easiest way t
     \item Also we observe that most of the python libraries like \textbf{spaCy}, \textbf{nltk} are not able to predict the similarity score if those words were not present in the training dataset. $\implies$ \textbf{nltk and spaCy doesn't use supervised learining but rather goes with pseudo-unsupervised/ unsupervised learing for predicting similarity.}
 \end{itemize}
 
+
+\newpage
+
+\section{Phrase and Sentence Similarity}
+\textbf{Aim:} Given labeled data-set splitted into training, testing, dev. we have to predict the Phrase and sentence similarity.
+\subsection{Approach}
+\begin{itemize}
+    \item Altough the labelled data was given. But i've used unsupervided learning in this task.
+    \item I'm using the frequency of how many pairs have similarity in the training data as my threshold frequency. And calculating if test pairs have similarity score $>$ threshold or not.
+    \item Doing this would always give the similarity score to be 1. Because in the dataset{\cite{paws2019naacl}} each pair sentences are just paraphrased.\\
+\end{itemize}
+
+\subsection{Insights}
+\begin{itemize}
+    \item \textbf{for example:} consider these 2 sentences{\cite{paws2019naacl}} to follow the approch mentioned above.\\
+    \textbf{Sentence1 -} In Paris , in October 1560 , he secretly met the English ambassador , Nicolas Throckmorton , asking him for a passport to return to \textbf{England through Scotland}.\\
+    \textbf{Sentence2 -} In October 1560 , he secretly met with the English ambassador , Nicolas Throckmorton , in Paris , and asked him for a passport to return to \textbf{Scotland through England} .
+
+    \item In the above example all the things are same except the highlighted part. As discussed in the \textbf{Task1} that for a given word word2vec looks at words before and after to make context of the words. Due to this reason the model can't tell the difference between the two sentences.
+    
+    \item Now consider these examples{\cite{paws2019naacl}}:\\
+    \textbf{Sentence1 -} This was a series of nested \textbf{angular standards} , so that measurements in azimuth and elevation could be done directly in polar coordinates relative to the ecliptic .\\
+    \textbf{Sentence2 -} This was a series of nested \textbf{polar scales} , so that measurements in azimuth and elevation could be performed directly in angular coordinates relative to the ecliptic .\\
+
+    \item Over here the difference is pretty big but the model wan't able to identify the dissimilarity in these sentences. \textbf{So to tackle situations like this I also add a check to compare Parts of Speech for both Sentences}. 
+    
+\end{itemize}
+
+\subsection{Findings}
+\begin{itemize}
+    \item To improve the accuracy of the model we need to shift from unsupervised to supervised learning.
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=1\linewidth]{accuracy.png}
+        \caption{Accuracy of the model}
+        \label{fig:enter-label}
+\end{figure}
+\end{itemize}
+
 \end{document}
