@@ -7,6 +7,8 @@
 - `task1\Q1.ipynb` is the code when Restrictions are there all other code files are named properly.
 - `precog-task-report` folder contains .tex and .bib codes along with figures for report.
 - For detailed explanation refer. to report.
+- Paper reading Task slides are availabel in `precog-task-report/Paper-reading-task-ppt` presentation is made in `Reveal.js`
+- Slides can be accessed online [here](https://pingu-73.github.io/precog-recrument-task/)
 
 # Task-1
 ## Aim: 
