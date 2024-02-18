@@ -1,0 +1,6 @@
+**precog
+.ipynb_checkpoints/
+__pycache__/
+/bonus/.ipynb_checkpoints
+sent.py
+sent2.py
