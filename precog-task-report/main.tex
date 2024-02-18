@@ -158,14 +158,34 @@ Since I've represented words as vectors and have plotted them. The easiest way t
     $$
 \end{itemize}
 
-\subsubsection{Hypothesis}
+
+\subsection{Findings}    
+
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{error after training.png}
+        \caption{Error after 50 iterations}
+        \label{fig:enter-label}
+    \end{minipage}%
+\end{figure}
+
+\begin{figure}[htbp]
+    % \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.5\linewidth]{task1_Untrained_demo.png}
+        \caption{Error after 50 iterations}
+        \label{fig:enter-label}
+    % \end{minipage}%
+\end{figure}
+
+\newpage
+\subsection{Insights}
 \begin{itemize}
-\item Similarity Score is always coming 1.0. This is because I'm using cosine similarity and since when I'm given two words. I'm finding those words in corpus and just using weight of that particular word. i.e if word is 'old' and 'new' then i'm getting weight of old: 2.17 and new: 2.31.
-\item So now when I'll find the cosine similarity it will give 1 based on the formula.
+    \item If we just convert words to vectors and then find the cosine similarity between them as an idea to find the similarity that would give false results.
+    For example: if I just use tf\_idf vectors and apply cosine similarity then the result would be same for each sentence.
+    \item Also in Word2Vec approach we see that for each word it uses words before and after that word to make context. \textbf{So if some words are randomly written and we train our model on that than we would find that the output given will be very wrong.}
+    \item Also we observe that most of the python libraries like \textbf{spaCy}, \textbf{nltk} are not able to predict the similarity score if those words were not present in the training dataset. $\implies$ \textbf{nltk and spaCy doesn't use supervised learining but rather goes with pseudo-unsupervised/ unsupervised learing for predicting similarity.}
 \end{itemize}
 
-\subsubsection{Failures}
-\begin{itemize}
-\item In my code i'm not able to 
-\end{itemize}
 \end{document}
