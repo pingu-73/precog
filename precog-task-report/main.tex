@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{biblatex}
+\usepackage{float}
+
+\addbibresource{references.bib}
+
+\begin{document}
+
+\title{Representations For Words, Phrases, Sentences}
+\author{Dikshant\\ % Corrected here
+{\textit{B.Tech ECE (4\textsuperscript{th} Sem)}}\\
+\textit{IIIT Hyderabad}\\
+\href{mailto:dikshant.gurudutt@students.iiit.ac.in}{dikshant.gurudutt@students.iiit.ac.in}\\
+(+91) 9034704754
+}
+
+\date{February 14, 2024}
+
+\maketitle
+
+\section*{Overview of Task}
+Despite my best efforts and commitment, I was unable to complete the project in its entirety due to time constraints and other prior commitments. Additionally, certain aspects of the topic posed challenges.\\
+\\
+However, I tried to address all the essential parts of the project, with the \textbf{exception of the bonus section}. The tasks I was able to complete are as follows:
+
+\subsection*{Word Similarity Scores:}
+\begin{itemize}
+\item Word to its numerical representation
+\item Word similarity when constraints
+\item Word similarity when no-constraints
+\end{itemize}
+
+\subsection*{Phrase And Sentence Similarity:}
+\begin{itemize}
+\item Mechanism to get representations for phrases \& sentences
+\item Phrase Similarity
+\item Sentence Similarity
+\end{itemize}
+
+\subsection*{Paper Reading Task}
+
+
+\newpage
+\section{Word Similarity}
+\textbf{Aim: } Predict similarity score of given words.
+
+\subsection{Approach}
+\begin{itemize}
+\item Since we are not allowed to use any pre-trained model for this and have to come up with a unsupervised/ pseudo-supervised algorithm.
+
+\item So we need to first convert the words in a corpus into some mathematical format.
+
+\item And apply some sort of unsupervised learning algo on that mathematics format to calculate the score.
+\end{itemize}
+ 
+
+\subsection{Methodologies}
+Main Challenge was to find appropriate way to convert word to mathematical format \cite{VectoringWords-video, VectoringWords-blog}.\\
+To formulate an algo first i've tokenized corpus based on sentences and removed words like of,the,... that make no sense in themselves. 
+\subsubsection{Approaches Tried}
+\subsubsection*{Approach-1}\label{subsec:approach-1}
+\begin{itemize}
+\item Broke every sentence of corpus into a 3D vector. Suppose the word is "anything strange mysterious" then the vector would become [[1, 0, 0],[0, 1, 0], [0, 0, 1]]. Similarly for other words.
+\item Since over here words were converted into sparse arrays, it is very hard to manipulate them.
+\end{itemize}
+
+\subsubsection*{Approach-2 (TF-IDF \cite{TF-IDF-blog})}
+\begin{itemize}
+\item Unlike the previous approach where the word was only assigned 1. In this approach if word is given score based on it's probability distribution.
+\item Suppose a word comes many times in a sentence but rarely in a corpus then its score is high on comparison with other words in a sentence.
+\item $Weightage\ of\ a\ particular\ word\ =\ TF \times IDF. \\ 
+(where\ TF \equiv term\ freq.\ \&  \ IDF \equiv Inverse\ doc\ freq.)$
+$$TF(t, s) = \frac{No.\ of\ occurance\ of\ t\ in\ sentence\ s}{Total\ no.\ of\ terms\ in\ sentence\ s}$$
+$$
+IDF(t) = \ln( \frac{Total\ no.\ of\ sentences\ in\ corpus}{No.\ of\ docs\ with\ term\ t\ in\ them})$$
+\item So we can create an analogy between TF and probability also $0\leq TF\leq1.$ And IDF is analogous to probability density. Where TF denotes how important a word is to a sentence and IDF denotes how important word is to a corpus.
+\item In my txt2vec code i've implemented IDF as following to avoid the case of $\ln(1) = 0$.\\$
+IDF(t) = \ln( \frac{Total\ no.\ of\ sentences\ in\ corpus}{No.\ of\ docs\ with\ term\ t\ in\ them}) + 1$
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{txt2vector.png}
+        \caption{Words converted into vector}
+        \label{fig:enter-label}
+    \end{minipage}%
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{VecPlot.png}
+        \caption{Word Vectors in 3d plane}
+        \label{fig: Word Vectors in 3d plane}
+    \end{minipage}
+\end{figure}
+
+\subsection{Approach-3 (Word2Vec)}
+\subsubsection{Understanding Model}
+\begin{itemize}
+    \item Just like any other nlp model first remove stopwords and tokenize the text.
+    \item In my approach i've created map b/w tokens and indices and vice versa. So that conversion becomes easy. 
+    \item Since our tokens are strings so we need to encode them for encoding i'm using Approach-1 (\ref{subsec:approach-1}).
+    \item In Word2Vec we loop through each word in sentence. in each loop we look at the words left and right of the input word. To make sense of context.
+    \item Now consider we have 4 words in the corpus. Now to embed it we will multiply the vector representation of words through \ref{subsec:approach-1} with the weights matrices.
+    $$
+    \begin{pmatrix}
+1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1\\
+0 & 0 & 1 & 0\\
+. & . & . & .\\
+. & . & . & .\\
+\end{pmatrix}
+\times 
+\begin{pmatrix}
+3 & 1 & 7\\
+2 & 9 & 6\\
+1 & 0 & 4\\
+9 & 1 & 3\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+3 & 1 & 7\\
+9 & 1 & 3\\
+1 & 0 & 4\\
+. & . & .\\
+. & . & .\\
+. & . & .\\
+\end{pmatrix}
+    $$
+    $$
+    input \ vector\  \times \ weight\ = \ embeddings
+    $$
+in embedding we are converting $\mathbb{R}^{4} \rightarrow \mathbb{R}^{3}$.
+\item Second layer recieves as input the embeddings, then from it outout is generated $\mathbb{R}^{3} \rightarrow \mathbb{R}^{4}$.
+$$
+    embeddings\  \times \ weight\ = \ probability\ vector
+$$
+\item after finding probability vector we need to find context prediction i.e which words are likely to be in the window of the input word.
+$$
+softmax(probability\ vector) = predicition 
+$$
+\end{itemize}
+
+\subsubsection{Vector to Similarity Score}
+Since I've represented words as vectors and have plotted them. The easiest way to find the similarity score is to check the distance between two vectors. To simplify this I'm \textbf{using Cosine Similarity since Euclidean distances is an expensive task to run}. 
+\begin{itemize}
+    \item In Cosine similarity focus is on the direction of the vectors, not their magnitude.
+    \item If two vectors are on the same side they are similar.
+    $$
+    Similarity = \frac{\vec{v_1}.\vec{v_2}}{||\vec{v_1}|| \times ||\vec{v_2}||}
+    $$
+\end{itemize}
+
+\subsubsection{Hypothesis}
+\begin{itemize}
+\item Similarity Score is always coming 1.0. This is because I'm using cosine similarity and since when I'm given two words. I'm finding those words in corpus and just using weight of that particular word. i.e if word is 'old' and 'new' then i'm getting weight of old: 2.17 and new: 2.31.
+\item So now when I'll find the cosine similarity it will give 1 based on the formula.
+\end{itemize}
+
+\subsubsection{Failures}
+\begin{itemize}
+\item In my code i'm not able to 
+\end{itemize}
+\end{document}
