@@ -36,4 +36,5 @@ Given labeled data-set splitted into training, testing, dev. we have to predict 
     - This was a series of nested `polar scales` , so that measurements in azimuth and elevation could be performed directly in angular coordinates relative to the ecliptic .
 
 - Over here the difference is pretty big but the model wan't able to identify the dissimilarity in these sentences. **So to tackle situations like this I also add a check to compare Parts of Speech for both Sentences**. 
-    
+
+# Bonus
