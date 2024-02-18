@@ -6,6 +6,7 @@
 - After installing spacy run `python -m spacy download en_core_web_lg` to install the dataset for spaCy.
 - `task1\Q1.ipynb` is the code when Restrictions are there all other code files are named properly.
 - `precog-task-report` folder contains .tex and .bib codes along with figures for report.
+- For detailed explanation refer. to report.
 
 # Task-1
 ## Aim: 
